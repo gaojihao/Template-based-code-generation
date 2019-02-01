@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import os,sys,shutil
+import codecs
+import re
 
 root = os.getcwd() #获取当前工作目录路径
 path = sys.path[0] #源文件路径
@@ -8,25 +10,20 @@ path = sys.path[0] #源文件路径
 def file_replace(path,moudleName):
     print path
 
-    try:
-        f = open(path, 'w+',encoding='utf-8')
+    with codecs.open(path, mode='r+w+',encoding='utf-8') as f:
         content = f.read()
         print content
+        # 正则替换
+        pattern = re.compile(r'(?Template')
+        content = re.sub(pattern, moudleName.capitalize(), content)
+        pattern = re.compile(r'(?template')
+        content = re.sub(pattern, moudleName, content)
         f.write(content)
         f.flush()
-    finally:
-        if f:
-            f.close()
-    
-
 
 # 文件夹遍历
 def dir_ergodic(file_dir,moudleName):
     for root, dirs, files in os.walk(file_dir):
-        print root
-        print dirs   #os.walk()所在目录的所有目录名
-        print files  #os.walk()所在目录的所有非目录文件名
-
         for name in files:
             file_path = os.path.join(root, name)
             file_replace(file_path,moudleName)
