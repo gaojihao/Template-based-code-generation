@@ -4,13 +4,26 @@ import os,sys,shutil
 root = os.getcwd() #获取当前工作目录路径
 path = sys.path[0] #源文件路径
 
+def file_replace(path,moudleName):
+    print path
+    pass
 
-def file_replace(file_dir,moudleName):
-    for _, dirs, files in os.walk(file_dir):
-        print "-----------"
+
+
+def dir_ergodic(file_dir,moudleName):
+    for root, dirs, files in os.walk(file_dir):
+        print root
         print dirs   #os.walk()所在目录的所有目录名
         print files  #os.walk()所在目录的所有非目录文件名
-        print " "
+
+        for name in files:
+            file_path = os.path.join(root, name)
+            file_replace(file_path,moudleName)
+        
+        for name in dirs:
+            dir_ergodic(os.path.join(root, name),moudleName)
+
+
 
 def files_copy(from_dir,to_dir,moudleName):
     dir = to_dir + '/' + moudleName.capitalize()
@@ -19,7 +32,7 @@ def files_copy(from_dir,to_dir,moudleName):
         shutil.rmtree(dir)
     
     shutil.copytree(from_dir, dir)
-    file_replace(dir,moudleName)
+    dir_ergodic(dir,moudleName)
 
 
 def main():
