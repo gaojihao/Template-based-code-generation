@@ -4,12 +4,13 @@ import os,sys,shutil
 root = os.getcwd() #获取当前工作目录路径
 path = sys.path[0] #源文件路径
 
+# 文件字符替换
 def file_replace(path,moudleName):
     print path
     pass
 
 
-
+# 文件夹遍历
 def dir_ergodic(file_dir,moudleName):
     for root, dirs, files in os.walk(file_dir):
         print root
@@ -24,7 +25,7 @@ def dir_ergodic(file_dir,moudleName):
             dir_ergodic(os.path.join(root, name),moudleName)
 
 
-
+# 文件夹拷贝
 def files_copy(from_dir,to_dir,moudleName):
     dir = to_dir + '/' + moudleName.capitalize()
 
