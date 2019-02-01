@@ -7,7 +7,17 @@ path = sys.path[0] #源文件路径
 # 文件字符替换
 def file_replace(path,moudleName):
     print path
-    pass
+
+    try:
+        f = open(path, 'w+',encoding='utf-8')
+        content = f.read()
+        print content
+        f.write(content)
+        f.flush()
+    finally:
+        if f:
+            f.close()
+    
 
 
 # 文件夹遍历
