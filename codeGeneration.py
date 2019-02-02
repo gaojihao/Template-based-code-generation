@@ -8,18 +8,24 @@ path = sys.path[0] #源文件路径
 
 # 文件字符替换
 def file_replace(path,moudleName):
-    print path
-
-    with codecs.open(path, mode='r+w+',encoding='utf-8') as f:
+    
+    with codecs.open(path, mode='r+bw+') as f:
         content = f.read()
         print content
         # 正则替换
-        pattern = re.compile(r'(?Template')
+        pattern = re.compile('Template')
         content = re.sub(pattern, moudleName.capitalize(), content)
-        pattern = re.compile(r'(?template')
+        pattern = re.compile('template')
         content = re.sub(pattern, moudleName, content)
+        f.seek(0)
+        f.truncate()
         f.write(content)
         f.flush()
+        f.close()
+    
+    #重命名文件
+    dstDir = path.replace('Template',moudleName.capitalize())
+    os.rename(path,dstDir)
 
 # 文件夹遍历
 def dir_ergodic(file_dir,moudleName):
