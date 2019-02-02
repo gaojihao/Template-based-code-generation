@@ -2,12 +2,17 @@
 import os,sys,shutil
 import codecs
 import re
+import getpass
+import time 
 
 root = os.getcwd() #获取当前工作目录路径
 path = sys.path[0] #源文件路径
+user = getpass.getuser() #用户名称
 
 # 文件字符替换
 def file_replace(path,moudleName):
+
+    localtime = time.strftime("%Y/%m/%d", time.localtime()) 
     
     with codecs.open(path, mode='r+bw+') as f:
         content = f.read()
@@ -17,6 +22,15 @@ def file_replace(path,moudleName):
         content = re.sub(pattern, moudleName.capitalize(), content)
         pattern = re.compile('template')
         content = re.sub(pattern, moudleName, content)
+
+        # 替换用户名称
+        pattern = re.compile('user')
+        content = re.sub(pattern, user, content)
+
+        # 替换创建时间
+        pattern = re.compile('YYYY/MM/DD')
+        content = re.sub(pattern, localtime, content)
+
         f.seek(0)
         f.truncate()
         f.write(content)
