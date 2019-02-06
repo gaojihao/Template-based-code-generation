@@ -7,16 +7,15 @@ import time
 
 root = os.getcwd() #获取当前工作目录路径
 path = sys.path[0] #源文件路径
-user = getpass.getuser() #用户名称
 
 # 文件字符替换
 def file_replace(path,moudleName):
 
     localtime = time.strftime("%Y/%m/%d", time.localtime()) 
-    
+    user = getpass.getuser() #用户名称
+
     with codecs.open(path, mode='r+bw+') as f:
         content = f.read()
-        print content
         # 正则替换
         pattern = re.compile('Template')
         content = re.sub(pattern, moudleName.capitalize(), content)
