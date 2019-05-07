@@ -18,8 +18,6 @@ def file_replace(path,moudleName):
         content = f.read()
         # 正则替换
         pattern = re.compile('Template')
-        content = re.sub(pattern, moudleName.capitalize(), content)
-        pattern = re.compile('template')
         content = re.sub(pattern, moudleName, content)
 
         # 替换用户名称
@@ -37,7 +35,7 @@ def file_replace(path,moudleName):
         f.close()
     
     #重命名文件
-    dstDir = path.replace('Template',moudleName.capitalize())
+    dstDir = path.replace('Template',moudleName)
     os.rename(path,dstDir)
 
 # 文件夹遍历
@@ -53,7 +51,7 @@ def dir_ergodic(file_dir,moudleName):
 
 # 文件夹拷贝
 def files_copy(from_dir,to_dir,moudleName):
-    dir = to_dir + '/' + moudleName.capitalize()
+    dir = to_dir + '/' + moudleName.lower()
 
     if os.path.exists(dir): #目录已存在则删除目录
         shutil.rmtree(dir)
@@ -69,7 +67,7 @@ def main():
 
     for moudleName in moudles:
         moudle = moudleName.strip()
-        if len(moudle) > 3:
+        if len(moudle) > 2:
             files_copy(path+'/Template', root, moudle)
 
 
